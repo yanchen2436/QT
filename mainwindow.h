@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include <QTcpSocket>//服务端只用socket
-
+#include <QtNetwork>
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -16,8 +16,17 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     QTcpSocket *tcpsocket;
+
+private:
+    void get(QUrl u);
+
 private slots:
 
+    void finished();
+
+    void sendcmd(QString cmd);
+
+    void sendmsg(QString msg);
 
     void connected_SLOT();
     void readyRead_Slot();
@@ -29,7 +38,27 @@ private slots:
 
     void on_send_clicked();
 
+    void on_radioButton_clicked();
+
+    void on_radioButton_5_clicked();
+
+    void on_radioButton_3_clicked();
+
+    void on_radioButton_2_clicked();
+
+    void on_SettingButton_clicked();
+
+    void on_pushButton_clicked();
+
+    void on_sendHttp_clicked();
+
 private:
     Ui::MainWindow *ui;
+
+    QUrl m_url;
+    QString m_htmlText;
+    QNetworkReply *m_pReply;
+    QNetworkAccessManager m_manager;
+
 };
 #endif // MAINWINDOW_H
