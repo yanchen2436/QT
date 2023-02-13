@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "SQLite.h"
+#include "QNetworkUtil.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -80,11 +81,6 @@ void MainWindow::on_SettingButton_clicked()
     MainWindow::sendcmd(medgain);
 }
 
-void MainWindow::on_pushButton_clicked()
-{
-    SQLController sql;
-    sql.SQLconnection();
-}
 
 void MainWindow::get(QUrl u)
 {
@@ -95,6 +91,7 @@ void MainWindow::get(QUrl u)
     }
     QNetworkRequest request;
     request.setUrl(m_url);
+//    qDebug() << "start get";
     m_pReply = m_manager.get(request);
     qDebug() << "start get";
     connect(m_pReply, &QNetworkReply::finished, this, &MainWindow::finished);
@@ -124,6 +121,37 @@ void MainWindow::finished()
 
 void MainWindow::on_sendHttp_clicked()
 {
+//    QString url = "https://www.baidu.com/";
+//    QNetworkAccessManager manager;
+//    // Create a request
+//    QNetworkRequest request(url);
+//    // Send the request and get the reply
+//    qDebug() << "start";
+//    QNetworkReply *reply = manager.get(request);
+//    // Connect the finished signal to a slot
+//    QObject::connect(reply, &QNetworkReply::finished, [reply]() {
+//        // Get the response data
+//        QByteArray data = reply->readAll();
+//        qDebug() << "ttt";
+//        // Process the data
+//        // Delete the reply object
+//        reply->deleteLater();
+//    });
+//    qDebug() << "end";
+    SQLController *sql1 = SQLController::getSQLController("test.db");
+    SQLController *sql2 = SQLController::getSQLController("test.db");
+    if (sql1 == sql2) {
+        qDebug() << "是单例";
+    }
 }
 
+void MainWindow::sendTest()
+{
+    ui->camer1->setText("OK!!!");
+    QByteArray data = m_pReply->readAll();
+    qDebug() << "返回的数据:" << data;
+    // Process the data
+    // Delete the reply object
+    m_pReply->deleteLater();
+}
 

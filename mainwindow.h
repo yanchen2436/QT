@@ -48,7 +48,7 @@ private slots:
 
     void on_SettingButton_clicked();
 
-    void on_pushButton_clicked();
+    void sendTest();
 
     void on_sendHttp_clicked();
 

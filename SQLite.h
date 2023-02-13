@@ -10,14 +10,19 @@
 #include <QSqlDriver>
 #include <QSqlRecord>
 
-
 class SQLController
 {
 private:
     QSqlQuery queryExec;
+    static SQLController *sqlcontroller;
 
+    SQLController();
+
+    SQLController(QString dataBaseName);
 public:
-    void SQLconnection(void);
+
+
+    static SQLController *getSQLController(QString dataBaseName);
 
     void query(QString time1, QString time2);
 

@@ -1,5 +1,6 @@
 #include "QNetworkUtil.h"
 #include <QNetworkAccessManager>
+#include <QNetworkReply>
 class NetWorker::Private
 {
 public:
@@ -21,8 +22,8 @@ NetWorker::NetWorker(QObject *parent) :
     QObject(parent),
     d(new NetWorker::Private(this))
 {
-//    connect(d->manager, &QNetworkAccessManager::finished,
-//            this, &NetWorker::finished);
+    connect(d->manager, &QNetworkAccessManager::finished,
+            this, &NetWorker::finished);
 }
 
 NetWorker::~NetWorker()

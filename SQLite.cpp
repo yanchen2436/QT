@@ -1,15 +1,32 @@
 #include "SQLite.h"
 
-void SQLController::SQLconnection()
+SQLController *SQLController::sqlcontroller = nullptr;
+
+SQLController::SQLController() {}
+
+SQLController::SQLController(QString dataBaseName)
 {
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE"); //以“QSQLITE”为数据库类型，在本进程地址空间内创建一个SQLite数据库。
-    db.setHostName("easybook-3313b0");      //设置数据库主机名
-    db.setDatabaseName("qtDB.db");          //以上创建的数据库以“qtDB.db”为数据库名。它是SQLite在建立内存数据库时唯一可用的名字。
-    db.setUserName("wang");             //设置数据库用户名
-    db.setPassword("123456");                   //设置数据库密码
+//    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE"); //以“QSQLITE”为数据库类型，在本进程地址空间内创建一个SQLite数据库。
+//    db.setHostName("easybook-3313b0");      //设置数据库主机名
+//    db.setDatabaseName("qtDB.db");          //以上创建的数据库以“qtDB.db”为数据库名。它是SQLite在建立内存数据库时唯一可用的名字。
+//    db.setUserName("wang");             //设置数据库用户名
+//    db.setPassword("123456");                   //设置数据库密码
+//    db.open();
+    QSqlDatabase db = QSqlDatabase::addDatabase(dataBaseName);
+    db.setHostName("zyck");
+    db.setDatabaseName(dataBaseName);
+    db.setUserName("lhy");
+    db.setPassword("123456");
     db.open();
 }
 
+SQLController *SQLController::getSQLController(QString dataBaseName)
+{
+    if (SQLController::sqlcontroller == nullptr) {
+        SQLController::sqlcontroller = new SQLController(dataBaseName);
+    }
+    return SQLController::sqlcontroller;
+}
 void SQLController::query(QString time1, QString time2)
 {
     QString str = "SELECT count FROM stat where stat.time>=_time1 and stat.time<=_time2";
@@ -18,7 +35,7 @@ void SQLController::query(QString time1, QString time2)
     exec(str);
 }
 
-void  SQLController::update(QString str)
+void SQLController::update(QString str)
 {
     exec(str);
 }
